@@ -1,6 +1,10 @@
 /node_modules
 /public/hot
+/public/vendor
 /public/storage
+/public/css/*.css
+/public/js/*.js
+/public/mix-manifest.json
 /storage/*.key
 /vendor
 .env
@@ -13,3 +17,5 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+_ide_helper.php
+/storage/clockwork.sqlite
