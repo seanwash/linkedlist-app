@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,10 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $notes = Auth::user()->notes()->latest()->get();
+    return view('dashboard', ['notes' => $notes]);
 })->middleware(['auth'])->name('dashboard');
+
+Route::put('/notes/{note:uuid}', [NotesController::class, 'update'])->middleware(['auth'])->name('notes.update');
 
 require __DIR__.'/auth.php';
