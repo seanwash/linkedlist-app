@@ -37,8 +37,9 @@
                 </div>
             @endif
 
-            <div class="max-w-lg mx-auto px-4">
-                <h1>LinkedList</h1>
+            <div class="max-w-lg mx-auto px-4 text-center">
+                <h1 class="text-xl font-semibold"><span class="inline-block mr-1">🧬</span> LinkedList</h1>
+                <p class="text-sm mt-2">This isn't a real thing yet, so you probably don't want to use it.</p>
             </div>
         </div>
     </body>
