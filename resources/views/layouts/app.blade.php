@@ -7,10 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @stack('styles')
 
-        <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
@@ -29,5 +28,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+        @stack('scripts')
     </body>
 </html>
