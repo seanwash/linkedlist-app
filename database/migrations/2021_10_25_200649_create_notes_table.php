@@ -13,9 +13,9 @@ class CreateNotesTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('title');
             $table->text('content')->nullable();
-            $table->boolean('is_daily')->default(false);
             $table->boolean('is_pinned')->default(false);
             $table->foreignId('user_id');
+            $table->date('for_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -8,6 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @livewireStyles
         @stack('styles')
 
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -29,6 +30,7 @@
             </main>
         </div>
 
+        @livewireScripts
         @stack('scripts')
     </body>
 </html>

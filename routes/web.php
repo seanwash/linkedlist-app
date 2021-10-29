@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\NotesController;
+use App\Http\Controllers\DailyNoteController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,11 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    $notes = Auth::user()->notes()->latest()->get();
-    return view('dashboard', ['notes' => $notes]);
-})->middleware(['auth'])->name('dashboard');
-
-Route::put('/notes/{note:uuid}', [NotesController::class, 'update'])->middleware(['auth'])->name('notes.update');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])->middleware(['auth'])->name('notes.daily.store');
 
 require __DIR__.'/auth.php';

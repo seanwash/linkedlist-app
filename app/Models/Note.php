@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Dyrynda\Database\Support\GeneratesUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +13,16 @@ class Note extends Model
 {
     use HasFactory, GeneratesUuid, SoftDeletes;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'for_date'];
+
+    protected $casts = [
+        'for_date' => 'date'
+    ];
+
+    public function scopeOrderByForDate($query): Builder
+    {
+        return $query->orderByDesc('for_date');
+    }
 
     public function user(): BelongsTo
     {
