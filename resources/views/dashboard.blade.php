@@ -19,20 +19,6 @@
                 </a>
             </div>
 
-            {{--
-            TODO: This is a hack to get around tailwind-custom-forms applying
-                  focus styles to all textareas.
-            --}}
-            @push('styles')
-                <style>
-                    textarea:focus {
-                        border: none !important;
-                        outline: none !important;
-                        box-shadow: none !important;
-                    }
-                </style>
-            @endpush
-
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                 @forelse ($notes as $note)
                     <livewire:note-editor :note="$note"/>

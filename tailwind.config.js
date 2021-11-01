@@ -7,6 +7,9 @@ module.exports = {
 
     theme: {
         extend: {
+            typography: (theme) => ({
+                li: theme('m-0')
+            })
         },
     },
 
@@ -16,5 +19,8 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+    ],
 };
