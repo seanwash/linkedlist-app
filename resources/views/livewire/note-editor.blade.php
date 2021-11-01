@@ -29,6 +29,6 @@
 
     <div
         x-ref="editor"
-        class="mt-4"
+        class="mt-4 prose"
     ></div>
 </article>
