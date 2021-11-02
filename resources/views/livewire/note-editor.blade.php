@@ -29,6 +29,6 @@
 
     <div
         x-ref="editor"
-        class="mt-4 prose max-w-none focus:outline-none"
+        class="mt-4 focus:outline-none"
     ></div>
 </article>

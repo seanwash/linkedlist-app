@@ -2,6 +2,9 @@ import './bootstrap'
 import Alpine from 'alpinejs'
 import {Editor} from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
+import TaskList from '@tiptap/extension-task-list'
+import TaskItem from '@tiptap/extension-task-item'
+import Typography from '@tiptap/extension-typography'
 
 window.setupEditor = function (content) {
     return {
@@ -13,11 +16,13 @@ window.setupEditor = function (content) {
                 element: element,
                 extensions: [
                     StarterKit,
+                    TaskList,
+                    TaskItem,
+                    Typography
                 ],
                 editorProps: {
                     attributes: {
-                        class:
-                            "prose max-w-none focus:outline-none"
+                        class: "focus:outline-none"
                     }
                 },
                 content: this.content,

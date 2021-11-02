@@ -1,3 +1,64 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* purgecss start ignore */
+
+/* --- All */
+
+.ProseMirror > * + * {
+    @apply mt-6;
+}
+
+/* --- Un/Ordered Lists */
+
+.ProseMirror ul, ol {
+    @apply pl-5;
+}
+
+.ProseMirror ol {
+    list-style-type: decimal;
+}
+
+.ProseMirror ul {
+    list-style-type: disc;
+}
+
+/* --- Task list */
+
+ul[data-type="taskList"] {
+    list-style: none;
+    padding: 0;
+}
+
+ul[data-type="taskList"] li {
+    @apply flex items-center;
+}
+
+ul[data-type="taskList"] li > label {
+    @apply mr-1 flex items-center;
+
+    user-select: none;
+}
+
+ul[data-type="taskList"] li > div {
+    flex: 1 1 auto;
+}
+
+ul[data-type="taskList"] input[type="checkbox"] {
+    @apply cursor-pointer;
+}
+
+/* --- Pre */
+
+.ProseMirror pre {
+    @apply p-4 font-mono bg-black text-white text-sm rounded-sm;
+}
+
+/* --- Blockquote */
+
+.ProseMirror blockquote {
+    @apply pl-4 border-black border-l-2;
+}
+
+/* purgecss end ignore */
