@@ -6,11 +6,7 @@ module.exports = {
     ],
 
     theme: {
-        extend: {
-            typography: (theme) => ({
-                li: theme('m-0')
-            })
-        },
+        extend: {},
     },
 
     variants: {
