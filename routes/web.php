@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DailyNoteController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('guest');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
-Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])->middleware(['auth'])->name('notes.daily.store');
+Route::get('/n', [NoteController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');
+
+Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])
+    ->middleware(['auth'])
+    ->name('notes.daily.store');
 
 require __DIR__.'/auth.php';
