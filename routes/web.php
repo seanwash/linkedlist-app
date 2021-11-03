@@ -21,7 +21,7 @@ Route::get('/', function () {
 
 Route::get('/n', [NoteController::class, 'index'])
     ->middleware(['auth'])
-    ->name('dashboard');
+    ->name('notes.index');
 
 Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])
     ->middleware(['auth'])
