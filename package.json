@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@tiptap/core": "^2.0.0-beta.130",
+        "@tiptap/extension-strike": "^2.0.0-beta.23",
         "@tiptap/extension-task-item": "^2.0.0-beta.24",
         "@tiptap/extension-task-list": "^2.0.0-beta.20",
         "@tiptap/extension-typography": "^2.0.0-beta.17",

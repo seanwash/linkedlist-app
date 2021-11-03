@@ -5,6 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
 import Typography from '@tiptap/extension-typography'
+import Strike from '@tiptap/extension-strike'
 
 window.setupEditor = function (content) {
     return {
@@ -18,7 +19,8 @@ window.setupEditor = function (content) {
                     StarterKit,
                     TaskList,
                     TaskItem,
-                    Typography
+                    Typography,
+                    Strike
                 ],
                 editorProps: {
                     attributes: {
