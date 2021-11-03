@@ -15,6 +15,6 @@ class NoteController extends Controller
             ->orderByDesc('for_date')
             ->get();
 
-        return view('dashboard', ['notes' => $notes]);
+        return view('notes.index', ['notes' => $notes]);
     }
 }
