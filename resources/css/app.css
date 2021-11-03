@@ -10,6 +10,31 @@
     @apply mt-6;
 }
 
+/* --- Headings */
+
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4 {
+    @apply font-bold;
+}
+
+.ProseMirror h1 {
+    @apply text-3xl;
+}
+
+.ProseMirror h2 {
+    @apply text-2xl;
+}
+
+.ProseMirror h3 {
+    @apply text-xl;
+}
+
+.ProseMirror h3 {
+    @apply text-lg;
+}
+
 /* --- Un/Ordered Lists */
 
 .ProseMirror ul, ol {
@@ -32,11 +57,11 @@ ul[data-type="taskList"] {
 }
 
 ul[data-type="taskList"] li {
-    @apply flex items-center;
+    @apply flex items-baseline;
 }
 
 ul[data-type="taskList"] li > label {
-    @apply mr-1 flex items-center;
+    @apply mr-1 flex items-center relative top-0.5;
 
     user-select: none;
 }
