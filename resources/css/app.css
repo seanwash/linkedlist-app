@@ -80,6 +80,12 @@ ul[data-type="taskList"] input[type="checkbox"] {
     @apply p-4 font-mono bg-black text-white text-sm rounded-sm;
 }
 
+/* --- Inline Code */
+
+.ProseMirror code {
+    @apply p-1 font-mono bg-black text-white text-sm rounded-sm;
+}
+
 /* --- Blockquote */
 
 .ProseMirror blockquote {
