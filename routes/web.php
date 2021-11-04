@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\DailyNoteController;
 use App\Http\Controllers\NoteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +21,23 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest');
 
+Route::get('/spa', function () {
+    return Inertia::render('home/index', [
+        'notes' => Auth::user()
+            ->notes()
+            ->whereNotNull('for_date')
+            ->orderByDesc('for_date')
+            ->get()
+    ]);
+});
+
 Route::get('/n', [NoteController::class, 'index'])
     ->middleware(['auth'])
     ->name('notes.index');
+
+Route::put('/n/{note}', [NoteController::class, 'update'])
+    ->middleware(['auth'])
+    ->name('notes.update');
 
 Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])
     ->middleware(['auth'])

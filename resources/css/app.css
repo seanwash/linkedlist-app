@@ -6,6 +6,14 @@
 
 /* --- All */
 
+.ProseMirror {
+    min-height: 600px;
+}
+
+.ProseMirror-focused {
+  outline: none;
+}
+
 .ProseMirror > * + * {
     @apply mt-6;
 }
