@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import userCurrentUser from '../../hooks/userCurrentUser';
+import { useClickAway } from 'react-use';
+import { Link } from '@inertiajs/inertia-react';
+import constants from '../../constants';
 
 const MainNavigation = (props) => {
   const user = userCurrentUser();
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
+
+  const menuRef = useRef(null);
+  useClickAway(menuRef, () => setUserMenuOpen(false));
 
   return (
     <nav className="bg-white border-b border-gray-100">
@@ -12,24 +19,24 @@ const MainNavigation = (props) => {
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <a href="https://linkedlist.test/n">
+              <Link href={constants.routes.HOME}>
                 <span className="flex items-center block h-10 w-auto fill-current text-gray-600">
                   🧬{' '}
                   <span className="inline-block ml-2 text-sm font-semibold text-gray-900">
                     LinkedList
                   </span>
                 </span>
-              </a>
+              </Link>
             </div>
 
             {/* Navigation Links */}
             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-              <a
+              <Link
                 className="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
-                href="https://linkedlist.test/n"
+                href={constants.routes.HOME}
               >
                 Notes
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -37,7 +44,11 @@ const MainNavigation = (props) => {
           <div className="hidden sm:flex sm:items-center sm:ml-6">
             <div className="relative">
               <div>
-                <button className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                <button
+                  type="button"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  className="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out"
+                >
                   <div>{user?.email}</div>
                   <div className="ml-1">
                     <svg
@@ -54,24 +65,29 @@ const MainNavigation = (props) => {
                   </div>
                 </button>
               </div>
-              <div className="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-right right-0">
-                <div className="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white">
-                  {/* Authentication */}
-                  <form method="POST" action="https://linkedlist.test/logout">
-                    <input
-                      type="hidden"
-                      name="_token"
-                      defaultValue="V1HI85gGuQvwOJ40dxwkFYKVD9Z3MlO8OZCMsZdU"
-                    />
-                    <a
-                      className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                      href="https://linkedlist.test/logout"
-                    >
-                      Log Out
-                    </a>
-                  </form>
+              {userMenuOpen && (
+                <div
+                  ref={menuRef}
+                  className="absolute z-50 mt-2 w-48 rounded-md shadow-lg origin-top-right right-0"
+                >
+                  <div className="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white">
+                    {/* Authentication */}
+                    <form method="POST" action="https://linkedlist.test/logout">
+                      <input
+                        type="hidden"
+                        name="_token"
+                        defaultValue="V1HI85gGuQvwOJ40dxwkFYKVD9Z3MlO8OZCMsZdU"
+                      />
+                      <a
+                        className="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                        href="https://linkedlist.test/logout"
+                      >
+                        Log Out
+                      </a>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 

@@ -29,7 +29,7 @@ Route::get('/spa', function () {
             ->orderByDesc('for_date')
             ->get()
     ]);
-});
+})->middleware('auth');
 
 Route::get('/n', [NoteController::class, 'index'])
     ->middleware(['auth'])
