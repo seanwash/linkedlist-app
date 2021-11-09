@@ -21,6 +21,18 @@ class NoteController extends Controller
         return view('notes.index', ['notes' => $notes]);
     }
 
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate(['title' => 'required', 'for_date' => 'nullable']);
+
+        Auth::user()->notes()->create([
+            'title' => $request->input('title'),
+            'for_date' => $request->input('for_date'),
+        ]);
+
+        return back();
+    }
+
     public function update(Note $note, Request $request): RedirectResponse
     {
         $request->validate([

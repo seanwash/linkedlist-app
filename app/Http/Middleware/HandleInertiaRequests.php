@@ -13,7 +13,7 @@ class HandleInertiaRequests extends Middleware
      * @see https://inertiajs.com/server-side-setup#root-template
      * @var string
      */
-    protected $rootView = 'layouts.spa';
+    protected $rootView = 'layouts.inertia';
 
     /**
      * Determines the current asset version.
@@ -36,10 +36,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+        $user = $request->user();
+
         return array_merge(parent::share($request), [
-            'auth.user' => fn () => $request->user()
-                ? $request->user()->only('id', 'name', 'email')
-                : null,
+            'last_daily_note_at' => $user?->last_daily_note_at(),
+            'auth.user' => fn () => $user?->only('id', 'email'),
         ]);
     }
 }

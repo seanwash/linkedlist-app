@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DailyNoteController;
 use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,26 +20,25 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest');
 
-Route::get('/spa', function () {
-    return Inertia::render('home/index', [
-        'notes' => Auth::user()
-            ->notes()
-            ->whereNotNull('for_date')
-            ->orderByDesc('for_date')
-            ->get()
-    ]);
-})->middleware('auth');
+Route::get('/n', function () {
+    $notes = Auth::user()
+        ->notes()
+        ->whereNotNull('for_date')
+        ->orderByDesc('for_date')
+        ->get();
 
-Route::get('/n', [NoteController::class, 'index'])
+    return Inertia::render('Home', [
+        'notes' => $notes,
+        'last_daily_note_at' => $notes->first()->for_date ?? null
+    ]);
+})->middleware('auth')->name('notes.index');
+
+Route::post('/n', [NoteController::class, 'store'])
     ->middleware(['auth'])
-    ->name('notes.index');
+    ->name('notes.store');
 
 Route::put('/n/{note}', [NoteController::class, 'update'])
     ->middleware(['auth'])
     ->name('notes.update');
-
-Route::post('/notes/daily/create', [DailyNoteController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('notes.daily.store');
 
 require __DIR__.'/auth.php';

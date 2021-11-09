@@ -19,6 +19,11 @@ class Note extends Model
         'for_date' => 'date'
     ];
 
+    public function scopeDaily($query)
+    {
+        return $query->whereNotNull('for_date');
+    }
+
     public function scopeOrderByForDate($query): Builder
     {
         return $query->orderByDesc('for_date');

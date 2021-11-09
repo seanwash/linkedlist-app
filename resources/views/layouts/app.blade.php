@@ -10,7 +10,6 @@
         @include('shared.favicon')
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-        @livewireStyles
         @stack('styles')
 
         <script src="{{ mix('js/app.js') }}" defer></script>
@@ -34,7 +33,6 @@
             </main>
         </div>
 
-        @livewireScripts
         @stack('scripts')
     </body>
 </html>
