@@ -32,7 +32,7 @@
             },
             onUpdate: debounce(({ editor }) => {
                 Inertia.put(`/n/${note.id}`, { content: editor.getHTML() });
-            }, 250),
+            }, 500),
         });
     });
 
