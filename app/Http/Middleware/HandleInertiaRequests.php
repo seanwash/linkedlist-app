@@ -49,7 +49,9 @@ class HandleInertiaRequests extends Middleware
                     ->latest()
                     ->whereNull('for_date')
                     ->when($search, function (Builder $query) use ($search) {
-                        return $query->where('title', 'like', '%'.$search.'%');
+                        return $query
+                            ->where('title', 'like', '%'.$search.'%')
+                            ->orWhere('content', 'like', '%'.$search.'%');
                     })
                     ->get()
             ]
