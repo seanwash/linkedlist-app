@@ -42,6 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function last_daily_note_at()
+    {
+        return $this->notes()->daily()->latest()->get('for_date')->first()?->for_date;
+    }
+
     public function notes(): HasMany
     {
         return $this->hasMany(Note::class);

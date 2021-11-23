@@ -2,7 +2,9 @@
     import Link from "../components/Link.svelte";
     import { Inertia } from "@inertiajs/inertia";
     import SidebarNoteSearch from "../components/SidebarNoteSearch.svelte";
+    import { add } from "date-fns";
 
+    export let last_daily_note_at;
     export let auth;
     export let search;
 
@@ -15,7 +17,11 @@
     }
 
     function createDailyNote() {
-        for_date = new Date();
+        if (last_daily_note_at) {
+            for_date = add(new Date(last_daily_note_at), { days: 1 });
+        } else {
+            for_date = new Date();
+        }
 
         Inertia.post(window.route("notes.store"), {
             title: for_date.toLocaleDateString(),

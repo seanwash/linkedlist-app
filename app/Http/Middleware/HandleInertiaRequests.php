@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'auth.user' => fn() => $user?->only('id', 'email'),
+            'last_daily_note_at' => $user?->last_daily_note_at(),
             'search' => [
                 'query' => $search,
                 'notes' => $user?->notes()
