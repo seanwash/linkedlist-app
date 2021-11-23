@@ -34,4 +34,8 @@ Route::put('/n/{note:uuid}', [NoteController::class, 'update'])
     ->name('notes.update')
     ->middleware('auth');
 
+Route::delete('/n/{note:uuid}', [NoteController::class, 'delete'])
+    ->name('notes.delete')
+    ->middleware('auth');
+
 require __DIR__.'/auth.php';

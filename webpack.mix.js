@@ -5,7 +5,9 @@ require('laravel-mix-svelte');
 const base = mix
   .js('resources/js/app.js', 'public/js')
   .svelte({
-    dev: !mix.inProduction(),
+    compilerOptions: {
+      dev: !mix.inProduction(),
+    },
   })
   .sourceMaps()
   .postCss('resources/css/app.css', 'public/css', [

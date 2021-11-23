@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ class NoteController extends Controller
 {
     public function index(Request $request): Response
     {
+        // TODO: Use a policy.
         $daily_notes = Auth::user()
             ->notes()
             ->whereNotNull('for_date')
@@ -24,6 +26,7 @@ class NoteController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        // TODO: Use a policy.
         $request->validate([
             'title' => 'required',
             'for_date' => 'nullable'
@@ -39,11 +42,13 @@ class NoteController extends Controller
 
     public function show(Note $note): Response
     {
+        // TODO: Use a policy.
         return Inertia::render('notes/show', ['note' => $note]);
     }
 
     public function update(Note $note, Request $request): RedirectResponse
     {
+        // TODO: Use a policy.
         $request->validate([
             'title' => 'required',
             'content' => 'nullable',
@@ -55,5 +60,17 @@ class NoteController extends Controller
         ]);
 
         return back();
+    }
+
+    public function delete(Note $note, Request $request)
+    {
+        // TODO: Use a policy.
+        $note->delete();
+
+        if (str_contains(url()->previous(), $note->uuid)) {
+            return Inertia::location(RouteServiceProvider::HOME);
+        } else {
+            return back();
+        }
     }
 }

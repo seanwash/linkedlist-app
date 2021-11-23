@@ -9,6 +9,7 @@
     export let search;
 
     const user = auth ? auth.user:null;
+    const sharedButtonClasses = "flex items-center text-xs text-gray-700 font-bold bg-white py-2 pl-2 pr-4 ";
 
     let for_date;
 
@@ -56,13 +57,26 @@
                     </span>
                 </Link>
 
-                <button class="text-xs" on:click={createNote} type="button">
-                    New Note
-                </button>
+                <div class="flex items-center">
+                    <button class={`${sharedButtonClasses} rounded-l-lg`} on:click={createNote} type="button">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                  fill-rule="evenodd" />
+                        </svg>
+                        Note
+                    </button>
 
-                <button class="text-xs" on:click={createDailyNote} type="button">
-                    New Daily Note
-                </button>
+                    <button class={`${sharedButtonClasses} rounded-r-lg border-l`} on:click={createDailyNote}
+                            type="button">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                  fill-rule="evenodd" />
+                        </svg>
+                        Daily Note
+                    </button>
+                </div>
             </div>
 
             <!-- Search & Results -->
