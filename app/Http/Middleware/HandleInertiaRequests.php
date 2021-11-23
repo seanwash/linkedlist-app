@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -45,8 +44,7 @@ class HandleInertiaRequests extends Middleware
             'auth.user' => fn() => $user?->only('id', 'email'),
             'search' => [
                 'query' => $search,
-                'notes' => Auth::user()
-                    ->notes()
+                'notes' => $user?->notes()
                     ->latest()
                     ->whereNull('for_date')
                     ->when($search, function (Builder $query) use ($search) {
