@@ -38,13 +38,16 @@
                 editor = editor;
             },
             onUpdate: debounce(({ editor }) => {
-                Inertia.put(`/n/${note.uuid}`, { title: note.title, content: editor.getHTML() });
-            }, 500),
+                Inertia.put(`/n/${note.uuid}`, {
+                    title: note.title,
+                    content: editor.getHTML(),
+                });
+            }, 2000),
         });
     });
 
     afterUpdate(() => {
-        if (note.content!==editor.getHTML()) {
+        if (note.content !== editor.getHTML()) {
             editor.commands.setContent(note.content);
         }
     });
