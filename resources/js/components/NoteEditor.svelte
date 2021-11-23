@@ -1,5 +1,5 @@
 <script>
-    import { onDestroy, onMount } from "svelte";
+    import { afterUpdate, onDestroy, onMount } from "svelte";
     import { Editor } from "@tiptap/core";
     import StarterKit from "@tiptap/starter-kit";
     import TaskList from "@tiptap/extension-task-list";
@@ -17,9 +17,16 @@
     let props = {};
 
     const isTodayNote = isToday(parseISO(note.for_date));
-    if (isTodayNote) { props["id"] = "today" }
+    if (isTodayNote) {
+        props["id"] = "today";
+    }
 
-    props["class"] = isTodayNote ? 'bg-gradient-to-b from-yellow-50 to-white' : 'bg-white';
+    props["class"] = isTodayNote ? "bg-gradient-to-b from-yellow-50 to-white":"bg-white";
+    props["class"] += " min-h-screen";
+
+    function updateTitle() {
+        Inertia.put(`/n/${note.uuid}`, { title: note.title, content: note.content });
+    }
 
     onMount(() => {
         editor = new Editor({
@@ -31,9 +38,15 @@
                 editor = editor;
             },
             onUpdate: debounce(({ editor }) => {
-                Inertia.put(`/n/${note.id}`, { content: editor.getHTML() });
+                Inertia.put(`/n/${note.uuid}`, { title: note.title, content: editor.getHTML() });
             }, 500),
         });
+    });
+
+    afterUpdate(() => {
+        if (note.content!==editor.getHTML()) {
+            editor.commands.setContent(note.content);
+        }
     });
 
     onDestroy(() => {
@@ -44,12 +57,20 @@
 </script>
 
 <article {...props}>
-    <h3 class="p-8 pb-0 text-2xl font-bold">
-        {#if isTodayNote}
-            <span class="inline-block mr-1">☀️</span>️
-        {/if}
-        {note.title}
-    </h3>
+    <div class="p-8 pb-0">
+        <header class="flex items-center">
+            {#if isTodayNote}
+                <span class="inline-block mr-4">☀️</span>️
+            {/if}
+            <input
+                bind:value={note.title}
+                class="bg-transparent border-none p-0 text-2xl font-bold w-full"
+                disabled={!!note.for_date}
+                on:change={updateTitle}
+                type="text"
+            >
+        </header>
+    </div>
     <div class="p-8">
         <div bind:this={element} />
     </div>

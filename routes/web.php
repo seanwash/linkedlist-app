@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\NoteController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,25 +18,20 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('guest');
 
-Route::get('/n', function () {
-    $notes = Auth::user()
-        ->notes()
-        ->whereNotNull('for_date')
-        ->orderByDesc('for_date')
-        ->get();
+Route::get('/n', [NoteController::class, 'index'])
+    ->name('notes.index')
+    ->middleware('auth');
 
-    return Inertia::render('Home', [
-        'notes' => $notes,
-        'last_daily_note_at' => $notes->first()->for_date ?? null
-    ]);
-})->middleware('auth')->name('notes.index');
+Route::get('/n/{note:uuid}', [NoteController::class, 'show'])
+    ->name('notes.show')
+    ->middleware('auth');
 
 Route::post('/n', [NoteController::class, 'store'])
-    ->middleware(['auth'])
-    ->name('notes.store');
+    ->name('notes.store')
+    ->middleware('auth');
 
-Route::put('/n/{note}', [NoteController::class, 'update'])
-    ->middleware(['auth'])
-    ->name('notes.update');
+Route::put('/n/{note:uuid}', [NoteController::class, 'update'])
+    ->name('notes.update')
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';

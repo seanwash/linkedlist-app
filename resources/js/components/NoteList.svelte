@@ -1,8 +1,7 @@
 <script>
-    import { page } from "@inertiajs/inertia-svelte";
     import NoteEditor from "./NoteEditor.svelte";
 
-    $: notes = $page.props.notes;
+    export let notes;
 
     function scrollToToday() {
         const todayEl = document.getElementById("today");
@@ -30,8 +29,8 @@
         {#each notes as note (note.id)}
             <NoteEditor {note} />
         {:else}
-            <div class="p-4 bg-white">
-                There's no time like the present!
+            <div class="p-4 bg-white text-gray-400 h-screen flex items-center justify-center">
+                Why not slap that New Note button?
             </div>
         {/each}
     </div>

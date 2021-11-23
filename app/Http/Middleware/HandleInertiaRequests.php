@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -37,10 +39,21 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request)
     {
         $user = $request->user();
+        $search = $request->query('s');
 
         return array_merge(parent::share($request), [
-            'last_daily_note_at' => $user?->last_daily_note_at(),
-            'auth.user' => fn () => $user?->only('id', 'email'),
+            'auth.user' => fn() => $user?->only('id', 'email'),
+            'search' => [
+                'query' => $search,
+                'notes' => Auth::user()
+                    ->notes()
+                    ->latest()
+                    ->whereNull('for_date')
+                    ->when($search, function (Builder $query) use ($search) {
+                        return $query->where('title', 'like', '%'.$search.'%');
+                    })
+                    ->get()
+            ]
         ]);
     }
 }

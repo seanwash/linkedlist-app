@@ -6,6 +6,8 @@
 
 <script>
     import NoteList from "../components/NoteList.svelte";
+
+    export let daily_notes;
 </script>
 
-<NoteList />
+<NoteList notes={daily_notes} />
