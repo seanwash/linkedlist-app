@@ -58,7 +58,12 @@
                 </Link>
 
                 <div class="flex items-center">
-                    <button class={`${sharedButtonClasses} rounded-l-lg`} on:click={createNote} type="button">
+                    <Link class={`${sharedButtonClasses} rounded-l-lg leading-5 pl-4`} href={`${window.route('notes.index')}#today`} type="button">
+                        ☀️
+                        <span class="sr-only">Today</span>
+                    </Link>
+
+                    <button class={`${sharedButtonClasses} border-l`} on:click={createNote} type="button">
                         <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path clip-rule="evenodd"
                                   d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
