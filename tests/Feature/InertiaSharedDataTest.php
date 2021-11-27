@@ -64,11 +64,13 @@ test('search.notes only contains notes belonging to the current user', function 
 
 test('search.notes only contains notes belonging to the current user when a search query is present', function () {
     $expected_notes_count = 3;
-    $user = User::factory()->has(Note::factory(['title' => 'Linked List'])->count($expected_notes_count))->create();
-    User::factory()->has(Note::factory(['title' => 'Linked List'])->count(3))->create();
+    $user = User::factory()->has(Note::factory([
+        'title' => 'Linked List', 'content' => 'Linked List'
+    ])->count($expected_notes_count))->create();
+    User::factory()->has(Note::factory(['title' => 'Linked List', 'content' => 'Linked List'])->count(3))->create();
 
     $this->actingAs($user)
-        ->get(route('notes.index', ['s'=> 'Linked list']))
+        ->get(route('notes.index', ['s' => 'Linked list']))
         ->assertInertia(fn(Assert $page) => $page
             ->has('search.notes', $expected_notes_count)
         );
