@@ -2,8 +2,6 @@ import './bootstrap';
 import { createInertiaApp } from '@inertiajs/inertia-svelte';
 import { InertiaProgress } from '@inertiajs/progress';
 
-console.log(window.location.pathname);
-
 // Skip booting the Inertia app if the current page is any of the auth routes.
 // We haven't converted the auth routes to using inertia yet.
 const shouldCreateInertiaApp = [
