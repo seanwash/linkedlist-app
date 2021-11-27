@@ -17,6 +17,7 @@ class NoteFactory extends Factory
             'content' => $this->faker->paragraph(),
             'is_pinned' => $this->faker->boolean(),
             'user_id' => User::factory(),
+            'for_date' => null,
         ];
     }
 }

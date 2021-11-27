@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Note;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,13 @@ use Inertia\Response;
 
 class NoteController extends Controller
 {
+    /**
+     * @throws AuthorizationException
+     */
     public function index(Request $request): Response
     {
-        // TODO: Use a policy.
+        $this->authorize('viewAny', Note::class);
+
         $daily_notes = Auth::user()
             ->notes()
             ->whereNotNull('for_date')
@@ -24,9 +29,13 @@ class NoteController extends Controller
         return Inertia::render('home', ['daily_notes' => $daily_notes]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function store(Request $request): RedirectResponse
     {
-        // TODO: Use a policy.
+        $this->authorize('create', Note::class);
+
         $request->validate([
             'title' => 'required',
             'for_date' => 'nullable'
@@ -40,15 +49,23 @@ class NoteController extends Controller
         return redirect()->route('notes.show', $note);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function show(Note $note): Response
     {
-        // TODO: Use a policy.
+        $this->authorize('view', $note);
+
         return Inertia::render('notes/show', ['note' => $note]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function update(Note $note, Request $request): RedirectResponse
     {
-        // TODO: Use a policy.
+        $this->authorize('update', $note);
+
         $request->validate([
             'title' => 'required',
             'content' => 'nullable',
@@ -62,9 +79,13 @@ class NoteController extends Controller
         return back();
     }
 
-    public function delete(Note $note, Request $request)
+    /**
+     * @throws AuthorizationException
+     */
+    public function delete(Note $note, Request $request): \Illuminate\Http\Response|RedirectResponse
     {
-        // TODO: Use a policy.
+        $this->authorize('delete', $note);
+
         $note->delete();
 
         if (str_contains(url()->previous(), $note->uuid)) {
