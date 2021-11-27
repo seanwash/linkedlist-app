@@ -1,10 +1,16 @@
 <script>
     import { debounce } from "lodash";
     import { Inertia } from "@inertiajs/inertia";
+    import { fade } from "svelte/transition";
     import Link from "./Link.svelte";
     import { useForm } from "@inertiajs/inertia-svelte";
 
     export let search;
+
+    const fadeTransitionAgs = {
+        delay: 0,
+        duration: 140,
+    };
 
     const deleteForm = useForm();
 
@@ -16,20 +22,62 @@
         });
     }, 500);
 
+    function resetSearchQuery() {
+        search.query = null;
+        handleSearch();
+    }
+
     function deleteNote(noteUuid) {
         $deleteForm.delete(window.route("notes.delete", noteUuid));
     }
+
+    function handleKeydown(event) {
+        if (event.metaKey && event.code==="KeyK") {
+            document.getElementById("searchInput").focus();
+        }
+    }
 </script>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <!-- Search Input-->
 <div class="p-4 pt-2">
-    <input
-        aria-label="Search Your Notes"
-        bind:value={search.query}
-        class="w-full"
-        on:input={handleSearch}
-        placeholder="Search" type="search"
-    >
+    <div
+        class={`flex items-center bg-white rounded-sm overflow-hidden transition-all duration-${fadeTransitionAgs.duration} focus-within:ring-2 focus-within:ring-black`}>
+        <div class="px-3 h-11 flex items-center text-gray-400">
+            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      fill-rule="evenodd" />
+            </svg>
+        </div>
+
+        <input
+            aria-label="Search Notes"
+            bind:value={search.query}
+            class="w-full border-none appearance-none p-0 h-11 focus:ring-0"
+            id="searchInput"
+            on:input={handleSearch}
+            placeholder="Search Notes"
+            type="text"
+        >
+
+        {#if search.query}
+            <div transition:fade|local={fadeTransitionAgs} class="h-11 p-3">
+                <button on:click={resetSearchQuery}
+                        class={`appearance-none rounded-sm transition-all duration-${fadeTransitionAgs.duration} ring-2 ring-transparent outline-none focus:outline-none focus:ring-black`}
+                        type="button"
+                >
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              fill-rule="evenodd" />
+                    </svg>
+                    <span class="sr-only">Clear Search Query</span>
+                </button>
+            </div>
+        {/if}
+    </div>
 </div>
 
 <!-- Note List -->
