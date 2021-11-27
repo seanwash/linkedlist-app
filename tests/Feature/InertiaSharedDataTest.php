@@ -75,3 +75,27 @@ test('search.notes only contains notes belonging to the current user when a sear
             ->has('search.notes', $expected_notes_count)
         );
 });
+
+test('search.notes contains daily notes only if a search.query is present', function () {
+    $expected_notes_count = 3;
+    $expected_daily_notes_count = 3;
+
+    $user = User::factory()
+        ->has(Note::factory(['title' => 'Linked List', 'content' => 'Linked List'])
+            ->count($expected_notes_count))
+        ->has(Note::factory(['title' => 'Linked List', 'content' => 'Linked List', 'for_date' => now()])
+            ->count($expected_daily_notes_count))
+        ->create();
+
+    $this->actingAs($user)
+        ->get(route('notes.index'))
+        ->assertInertia(fn(Assert $page) => $page
+            ->has('search.notes', $expected_notes_count)
+        );
+
+    $this->actingAs($user)
+        ->get(route('notes.index', ['s' => 'Linked list']))
+        ->assertInertia(fn(Assert $page) => $page
+            ->has('search.notes', $expected_notes_count + $expected_daily_notes_count)
+        );
+});

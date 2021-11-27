@@ -20,10 +20,8 @@ class HandleInertiaRequests extends Middleware
      * Determines the current asset version.
      *
      * @see https://inertiajs.com/asset-versioning
-     * @param  Request  $request
-     * @return string|null
      */
-    public function version(Request $request)
+    public function version(Request $request): string|null
     {
         return parent::version($request);
     }
@@ -32,10 +30,8 @@ class HandleInertiaRequests extends Middleware
      * Defines the props that are shared by default.
      *
      * @see https://inertiajs.com/shared-data
-     * @param  Request  $request
-     * @return array
      */
-    public function share(Request $request)
+    public function share(Request $request): array
     {
         $user = $request->user();
         $search = $request->query('s');
@@ -47,7 +43,9 @@ class HandleInertiaRequests extends Middleware
                 'query' => $search,
                 'notes' => $user?->notes()
                     ->latest()
-                    ->whereNull('for_date')
+                    ->when(! $search, function (Builder $query) use ($search) {
+                        return $query->whereNull('for_date');
+                    })
                     ->when($search, function (Builder $query) use ($search) {
                         return $query->where(function (Builder $query) use ($search) {
                             return $query->where('title', 'like', '%'.$search.'%')
