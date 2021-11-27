@@ -85,23 +85,25 @@
     <ul class="space-y-2">
         {#if search.notes?.length}
             {#each search.notes as note (note.id)}
-                <li class="flex items-center bg-white rounded-sm">
-                    <Link class="block w-full pl-4 py-2 text-sm"
+                <li class="flex items-center bg-white rounded-sm overflow-hidden ring-inset ring-2 ring-transparent transition-all duration-${fadeTransitionAgs.duration} focus-within:ring-black">
+                    <Link class="block w-full pl-4 py-2 text-sm ring-0 outline-none"
                           href={window.route('notes.show', { note: note.uuid, s: search.query })}
                     >{note.title}</Link>
 
-                    <button
-                        type="button" on:click|preventDefault={() => deleteNote(note.uuid)}
-                        class="px-4 py-2 text-gray-300"
-                        disabled={$deleteForm.processing}
-                    >
-                        <span class="sr-only">Delete</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
-                    </button>
+                    <div class="px-3 py-2 text-gray-300 flex items-center">
+                        <button
+                            type="button" on:click|preventDefault={() => deleteNote(note.uuid)}
+                            class={`rounded-sm transition-all duration-${fadeTransitionAgs.duration} ring-2 ring-transparent outline-none focus:text-black focus:outline-none focus:ring-black`}
+                            disabled={$deleteForm.processing}
+                        >
+                            <span class="sr-only">Delete</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
                 </li>
             {/each}
         {/if}
