@@ -12,7 +12,6 @@
         Inertia.get(window.route("notes.index"), {
             s: search.query,
         }, {
-            preserveState: true,
             replace: true,
         });
     }, 500);
@@ -40,7 +39,7 @@
             {#each search.notes as note (note.id)}
                 <li class="flex items-center bg-white rounded-sm">
                     <Link class="block w-full pl-4 py-2 text-sm"
-                          href={window.route('notes.show', note.uuid)}
+                          href={window.route('notes.show', { note: note.uuid, s: search.query })}
                     >{note.title}</Link>
 
                     <button
